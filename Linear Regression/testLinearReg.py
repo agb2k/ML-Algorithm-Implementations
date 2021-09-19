@@ -1,15 +1,15 @@
 # This is where model testing takes place
 
+import pandas as pd
+import numpy as np
+import sklearn
+from sklearn import linear_model
+import matplotlib.pyplot as pyplot
+from matplotlib import style
 import pickle
 
-import matplotlib.pyplot as pyplot
-import numpy as np
-import pandas as pd
-import sklearn
-from matplotlib import style
-
-# Pandas allows for convenient data
-data = pd.read_csv("data/2019.csv")
+# Pandas allows for convenient World Happiness Report
+data = pd.read_csv("../Data/World Happiness Report/2019.csv")
 # Attributes within dataset chosen as they are most likely to provide accurate readings
 attributes = ["Score", "GDP per capita", "Social support", "Healthy life expectancy"]
 data = data[attributes]
@@ -17,12 +17,12 @@ data = data[attributes]
 # Labels for prediction
 predict = "Score"
 
-# Drops score from the data
+# Drops score from the World Happiness Report
 x = np.array(data.drop([predict], axis=1))
 y = np.array(data[predict])
 x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=0.1)
 
-pickleIn = open("linearModel.pickle", "rb")
+pickleIn = open("linearReg.pickle", "rb")
 linear = pickle.load(pickleIn)
 
 accuracy = linear.score(x_test, y_test)
