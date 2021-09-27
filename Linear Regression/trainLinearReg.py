@@ -9,7 +9,7 @@ from matplotlib import style
 import pickle
 
 # Pandas allows for convenient World Happiness Report
-data = pd.read_csv("Data/World Happiness Report/2019.csv")
+data = pd.read_csv("../Data/World Happiness Report/2019.csv")
 # Attributes within dataset chosen as they are most likely to provide accurate readings
 attributes = ["Score", "GDP per capita", "Social support", "Healthy life expectancy"]
 data = data[attributes]
@@ -22,6 +22,7 @@ x = np.array(data.drop([predict], axis=1))
 y = np.array(data[predict])
 x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=0.1)
 
+# For loop gets the model with the highest accuracy and uses thatA
 best = 0.0
 for _ in range(10000):
     # Splits 10% of World Happiness Report into test World Happiness Report and remaining into training
@@ -40,10 +41,10 @@ for _ in range(10000):
         # Used to store our model as a pickle file
         best = accuracy
         print(f"Best: {best}")
-        with open("Linear Regression/linearReg.pickle", "wb") as f:
+        with open("linearReg.pickle", "wb") as f:
             pickle.dump(linear, f)
 
-pickleIn = open("Linear Regression/linearReg.pickle", "rb")
+pickleIn = open("linearReg.pickle", "rb")
 linear = pickle.load(pickleIn)
 
 accuracy = linear.score(x_test, y_test)
